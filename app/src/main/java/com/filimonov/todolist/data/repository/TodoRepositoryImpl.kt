@@ -10,8 +10,9 @@ import com.filimonov.todolist.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
+import javax.inject.Inject
 
-class TodoRepositoryImpl(
+class TodoRepositoryImpl @Inject constructor(
     private val todoDao: TodoDao
 ) : TodoRepository {
     override fun getAllTodoForDate(date: LocalDate): Flow<List<Todo>> {
