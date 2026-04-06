@@ -8,5 +8,5 @@ interface TodoRepository {
 
     fun getAllTodoForDate(date: LocalDate): Flow<List<Todo>>
 
-    suspend fun addTodo(name: String, description: String, startDate: Long, finishDate: Long)
+    suspend fun addTodo(todo: Todo)
 }
