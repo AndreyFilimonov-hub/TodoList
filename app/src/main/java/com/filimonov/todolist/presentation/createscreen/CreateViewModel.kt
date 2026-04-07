@@ -80,10 +80,20 @@ class CreateViewModel @Inject constructor(
                 CreateCommand.Save -> {
                     _state.update { previousState ->
                         if (previousState is CreateState.Creation) {
-                            val startDate =
-                                previousState.startTime.toLong(previousState.selectedDay)
-                            val finishDate =
-                                previousState.finishTime.toLong(previousState.selectedDay)
+                            val selectedDay = previousState.selectedDay
+                            val startTime = previousState.startTime
+                            val finishTime = previousState.finishTime
+
+                            val startDate = startTime.toLong(selectedDay)
+
+                            val finishDay = if (finishTime.isBefore(startTime) || finishTime == startTime) {
+                                selectedDay.plusDays(1)
+                            } else {
+                                selectedDay
+                            }
+
+                            val finishDate = finishTime.toLong(finishDay)
+
                             val todo = Todo(
                                 id = 0,
                                 name = previousState.title,
