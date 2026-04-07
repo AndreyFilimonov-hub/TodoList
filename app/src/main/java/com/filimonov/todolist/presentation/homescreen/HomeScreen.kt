@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastForEach
@@ -271,8 +272,16 @@ private fun TodoCard(
 private fun isTodoInHour(todo: Todo, selectedDay: LocalDate, hour: Int): Boolean {
     val hourStart = selectedDay.atTime(hour, 0)
         .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-    val hourEnd = selectedDay.atTime(hour, 59, 59)
+    val hourEnd = selectedDay.atTime(hour, 0).plusHours(1)
         .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
     return todo.startDate < hourEnd && todo.finishDate > hourStart
+}
+
+@Composable
+@Preview
+private fun HomePreview() {
+    HomeScreen(
+        onAddTodoClick = {}
+    )
 }
