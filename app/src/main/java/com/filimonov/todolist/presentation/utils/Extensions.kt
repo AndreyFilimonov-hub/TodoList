@@ -32,7 +32,7 @@ fun LocalDate.toFullDateString(): String {
 }
 
 fun LocalTime.toLong(date: LocalDate): Long {
-    return date.atTime(this)
+    return date.atTime(this.hour, this.minute, 0, 0)
         .atZone(ZoneId.systemDefault())
         .toInstant()
         .toEpochMilli()
