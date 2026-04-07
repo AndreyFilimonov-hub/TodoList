@@ -276,3 +276,11 @@ private fun isTodoInHour(todo: Todo, selectedDay: LocalDate, hour: Int): Boolean
 
     return todo.startDate < hourEnd && todo.finishDate > hourStart
 }
+
+@Composable
+@Preview
+private fun HomePreview() {
+    HomeScreen(
+        onAddTodoClick = {}
+    )
+}
