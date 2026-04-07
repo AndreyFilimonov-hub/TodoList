@@ -1,6 +1,7 @@
 package com.filimonov.todolist.data.mapper
 
 import com.filimonov.todolist.data.model.TodoDbModel
+import com.filimonov.todolist.data.model.TodoDto
 import com.filimonov.todolist.domain.entity.Todo
 import kotlinx.serialization.json.Json
 import java.time.LocalDate
@@ -21,7 +22,14 @@ fun LocalDate.getEndDayTimeMillis(): Long {
 }
 
 fun Todo.toDbModel(): TodoDbModel {
-    val json = Json.encodeToString(this)
+    val todoDto = TodoDto(
+        id = id,
+        name = name,
+        description = description,
+        startDate = startDate,
+        finishDate = finishDate
+    )
+    val json = Json.encodeToString(todoDto)
     return TodoDbModel(
         id = 0,
         json = json,
@@ -31,8 +39,14 @@ fun Todo.toDbModel(): TodoDbModel {
 }
 
 fun TodoDbModel.toEntity(): Todo {
-    val todo = Json.decodeFromString<Todo>(this.json)
-    return todo.copy(id = this.id)
+    val todoDto = Json.decodeFromString<TodoDto>(this.json)
+    return Todo(
+        id = id,
+        name = todoDto.name,
+        description = todoDto.description,
+        startDate = todoDto.startDate,
+        finishDate = todoDto.finishDate
+    )
 }
 
 fun List<TodoDbModel>.toEntities(): List<Todo> {
