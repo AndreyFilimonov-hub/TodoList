@@ -45,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -242,10 +243,15 @@ private fun TodoCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = todo.name
+                    modifier = Modifier.weight(1f),
+                    text = todo.name,
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "${todo.startDate.toHourFormat()} - ${todo.finishDate.toHourFormat()}"
+                    text = "${todo.startDate.toHourFormat()} - ${todo.finishDate.toHourFormat()}",
+                    maxLines = 1,
+                    softWrap = false
                 )
                 Icon(
                     modifier = Modifier
