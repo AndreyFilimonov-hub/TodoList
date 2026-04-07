@@ -28,17 +28,13 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,7 +51,7 @@ import androidx.compose.ui.util.fastForEach
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.filimonov.todolist.R
 import com.filimonov.todolist.domain.entity.Todo
-import com.filimonov.todolist.presentation.utils.toDate
+import com.filimonov.todolist.presentation.component.TodoDatePickerDialog
 import com.filimonov.todolist.presentation.utils.toDayMonthString
 import com.filimonov.todolist.presentation.utils.toHourFormat
 import java.time.LocalDate
@@ -78,7 +74,10 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
+                modifier = Modifier.clip(CircleShape),
                 onClick = onAddTodoClick,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -109,7 +108,7 @@ private fun HomeContent(
     contentPadding: PaddingValues
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         contentPadding = contentPadding
     ) {
         item {
@@ -128,6 +127,9 @@ private fun HomeContent(
             }
 
             HourCell(hour = hour, todosInThisHour = todosInThisHour)
+        }
+        item {
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }
@@ -180,37 +182,6 @@ private fun HomeTopAppBar(
             )
         }
     )
-}
-
-@Composable
-private fun TodoDatePickerDialog(
-    onDismissRequest: () -> Unit,
-    onDateSelected: (LocalDate) -> Unit
-) {
-    val datePickerState =
-        rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
-
-    DatePickerDialog(
-        onDismissRequest = onDismissRequest,
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    datePickerState.selectedDateMillis?.let { millis ->
-                        onDateSelected(millis.toDate())
-                    }
-                }
-            ) {
-                Text(text = stringResource(R.string.ok))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(R.string.cancel))
-            }
-        }
-    ) {
-        DatePicker(datePickerState)
-    }
 }
 
 @Composable

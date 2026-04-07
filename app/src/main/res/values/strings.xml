@@ -6,4 +6,12 @@
     <string name="hour_format">%02d:00</string>
     <string name="date_picker">Выбор даты</string>
     <string name="add_todo">Добавить дело</string>
+    <string name="navigation_back">Вернуться назад</string>
+    <string name="create_todo">Создание дела</string>
+    <string name="todo_name_placeholder">Название дела</string>
+    <string name="date">Дата: %1$s</string>
+    <string name="select_time_start">С: %1$s</string>
+    <string name="select_time_finish">До: %1$s</string>
+    <string name="todo_description_placeholder">Описание дела</string>
+    <string name="save">Сохранить</string>
 </resources>
