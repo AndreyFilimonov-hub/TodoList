@@ -13,7 +13,7 @@ sealed interface CreateState {
         val finishTime: LocalTime = startTime.plusHours(1),
     ) : CreateState {
         val isSaveEnabled: Boolean
-            get() = title.isNotBlank() && description.isNotBlank() && startTime <= finishTime
+            get() = title.isNotBlank() && description.isNotBlank()
     }
 
     data object Finish : CreateState
