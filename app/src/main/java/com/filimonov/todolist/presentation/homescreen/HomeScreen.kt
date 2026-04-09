@@ -54,10 +54,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.filimonov.todolist.R
 import com.filimonov.todolist.domain.entity.Todo
 import com.filimonov.todolist.presentation.component.TodoDatePickerDialog
+import com.filimonov.todolist.presentation.utils.isTodoInHour
 import com.filimonov.todolist.presentation.utils.toDayMonthString
 import com.filimonov.todolist.presentation.utils.toHourFormat
 import java.time.LocalDate
-import java.time.ZoneId
 
 @Composable
 fun HomeScreen(
@@ -273,15 +273,6 @@ private fun TodoCard(
             }
         }
     }
-}
-
-private fun isTodoInHour(todo: Todo, selectedDay: LocalDate, hour: Int): Boolean {
-    val hourStart = selectedDay.atTime(hour, 0)
-        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-    val hourEnd = selectedDay.atTime(hour, 0).plusHours(1)
-        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-
-    return todo.startDate < hourEnd && todo.finishDate > hourStart
 }
 
 @Composable

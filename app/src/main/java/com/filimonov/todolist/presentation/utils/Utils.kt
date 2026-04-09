@@ -1,5 +1,6 @@
 package com.filimonov.todolist.presentation.utils
 
+import com.filimonov.todolist.domain.entity.Todo
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -36,4 +37,13 @@ fun LocalTime.toLong(date: LocalDate): Long {
         .atZone(ZoneId.systemDefault())
         .toInstant()
         .toEpochMilli()
+}
+
+fun isTodoInHour(todo: Todo, selectedDay: LocalDate, hour: Int): Boolean {
+    val hourStart = selectedDay.atTime(hour, 0)
+        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    val hourEnd = selectedDay.atTime(hour, 0).plusHours(1)
+        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+    return todo.startDate < hourEnd && todo.finishDate > hourStart
 }
